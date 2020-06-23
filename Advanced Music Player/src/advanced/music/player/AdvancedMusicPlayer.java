@@ -37,15 +37,16 @@ public class AdvancedMusicPlayer extends Application{
         ObservableList<String> names = FXCollections.observableArrayList(
           "Song1.mp3", "Song2.mp3", "Song3.mp3");
         ListView<String> listView = new ListView<String>(names);
-        Button play = new Button("Play");
-        Button stop = new Button("Stop");
-        Button add  = new Button("Add Song");
-        Button export = new Button("Export");
+        Button playButton = new Button("Play");
+        Button stopButton = new Button("Stop");
+        Button addButton  = new Button("Add Song");
+        Button exportButton = new Button("Export");
         Button importButton = new Button("Import");
+        Button sortButton = new Button("Sort");
         
         FlowPane buttons = new FlowPane();
         buttons.setHgap(5);
-        buttons.getChildren().addAll(play, stop, add, export, importButton);
+        buttons.getChildren().addAll(playButton, stopButton, addButton, sortButton, exportButton, importButton);
         
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -56,7 +57,7 @@ public class AdvancedMusicPlayer extends Application{
         grid.add(listView, 0, 1);
         
         //Scene scene = new Scene(grid, 350, 400);
-        Scene scene = new Scene(grid, 350, 400);
+        Scene scene = new Scene(grid, 400, 400);
         scene.setFill(Color.LIGHTBLUE);
 
         stage.setScene(scene);
