@@ -30,17 +30,18 @@ import javafx.scene.layout.StackPane;
  */
 public class AdvancedMusicPlayer extends Application{
 
+    static LinkedList
     static ListView<String> listView;
-    static ObservableList<String> names;
+    static ObservableList<String> songNames;
     
     @Override
     public void start(Stage stage) {
                
         stage.setTitle("JMAC Music Player");
 
-        names = FXCollections.observableArrayList(
+        songNames = FXCollections.observableArrayList(
           "Song1.mp3", "Song2.mp3", "Song3.mp3");
-        listView = new ListView<>(names);
+        listView = new ListView<>(songNames);
         Button playButton = new Button("Play");
         playButton.setOnAction(this::play); //method reference
         Button stopButton = new Button("Stop");
@@ -92,7 +93,7 @@ public class AdvancedMusicPlayer extends Application{
     }
     
     private void addSong(ActionEvent event){
-        //TODO addsongs songs
+        //TODO addsongs
     }
 
     private void sort(ActionEvent event) {
