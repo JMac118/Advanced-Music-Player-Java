@@ -44,10 +44,15 @@ public class AdvancedMusicPlayer extends Application{
         Button playButton = new Button("Play");
         playButton.setOnAction(this::play); //method reference
         Button stopButton = new Button("Stop");
+                stopButton.setOnAction(this::stop); //method reference
         Button addButton  = new Button("Add Song");
+        addButton.setOnAction(this::addSong); //method reference
         Button exportButton = new Button("Export");
+                exportButton.setOnAction(this::listExport); //method reference
         Button importButton = new Button("Import");
+                importButton.setOnAction(this::listImport); //method reference
         Button sortButton = new Button("Sort");
+                sortButton.setOnAction(this::sort); //method reference
         
         FlowPane buttons = new FlowPane();
         buttons.setHgap(5);
@@ -79,6 +84,22 @@ public class AdvancedMusicPlayer extends Application{
     //button functions
     
     private void play(ActionEvent event){
-        names.add("played a song");
+        //TODO play songs
+    }
+    
+    private void addSong(ActionEvent event){
+        //TODO play songs
+    }
+
+    private void sort(ActionEvent event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void listImport(ActionEvent event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void listExport(ActionEvent event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
