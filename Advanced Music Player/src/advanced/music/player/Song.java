@@ -13,7 +13,10 @@ public class Song {
     private String songName;
     private String uri;
     
-    
+    public Song(String filename, String path){
+        songName = filename;
+        uri = path;
+    }
     /**
      * @return the songName
      */
