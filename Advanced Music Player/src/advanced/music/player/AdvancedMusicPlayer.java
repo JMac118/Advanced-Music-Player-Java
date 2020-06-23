@@ -22,6 +22,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
@@ -64,10 +65,12 @@ public class AdvancedMusicPlayer extends Application {
         importButton.setOnAction(this::listImport); //method reference
         Button sortButton = new Button("Sort");
         sortButton.setOnAction(this::sort); //method reference
+        Button searchButton = new Button("Search");
+        searchButton.setOnAction(this::search); //method reference
 
         FlowPane buttons = new FlowPane();
         buttons.setHgap(5);
-        buttons.getChildren().addAll(playButton, stopButton, addButton, sortButton, exportButton, importButton);
+        buttons.getChildren().addAll(playButton, stopButton, addButton, sortButton, searchButton, exportButton, importButton);
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -78,7 +81,7 @@ public class AdvancedMusicPlayer extends Application {
         grid.add(listView, 0, 1);
 
         //Scene scene = new Scene(grid, 350, 400);
-        Scene scene = new Scene(grid, 400, 400);
+        Scene scene = new Scene(grid, 420, 400);
         scene.setFill(Color.LIGHTBLUE);
 
         stage.setScene(scene);
@@ -100,15 +103,15 @@ public class AdvancedMusicPlayer extends Application {
     }
 
     private void playNext() {
-        if ((index+1) < songList.size()) {
+        if ((index + 1) < songList.size()) {
             index++;
         } else {
             index = 0;
         }
-        
+
         //selects the song
         listView.getSelectionModel().select(index);
-        
+
         Song current = songList.get(index);
         //has to reverse the forward slashes
         Media currentMedia = new Media("file:///" + current.getUri().replace('\\', '/'));
@@ -183,17 +186,16 @@ public class AdvancedMusicPlayer extends Application {
 
     private void sort(ActionEvent event) {
         SongSort sorter = new SongSort();
-        
-        
+
         Song[] arr = songList.toArray(new Song[songList.size()]);
         arr = sorter.MergeSortSong(arr);
-        
+
         songList.clear();
-        
-        for(int i = 0; i < arr.length; i++){
+
+        for (int i = 0; i < arr.length; i++) {
             songList.add(arr[i]);
         }
-        
+
         refreshList();
     }
 
@@ -203,5 +205,43 @@ public class AdvancedMusicPlayer extends Application {
 
     private void listExport(ActionEvent event) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void search(ActionEvent event) {
+        Stage searchWindow = new Stage();
+        searchWindow.setTitle("Enter Search Term");
+        GridPane searchGrid = new GridPane();
+
+        TextField input = new TextField();
+
+        Button searchButton = new Button("Search");
+        searchButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                String searchTerm = input.getText();
+                
+                searchList(searchTerm);
+            }
+        });
+
+        searchGrid.add(input, 0, 0);
+        searchGrid.add(searchButton, 1, 0);
+
+        System.out.println("HERE");
+        //searchGrid.setHgap(10);
+        //searchGrid.setVgap(10);
+        searchGrid.setPadding(new Insets(10, 25, 10, 40));
+
+        Scene scene = new Scene(searchGrid, 300, 50);
+        scene.setFill(Color.LIGHTBLUE);
+
+        searchWindow.setScene(scene);
+        searchWindow.show();
+        
+        
+    }
+    
+    private void searchList(String searchTerm){
+        //TODO implement binary search
     }
 }
