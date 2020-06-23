@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.*;
@@ -29,15 +30,19 @@ import javafx.scene.layout.StackPane;
  */
 public class AdvancedMusicPlayer extends Application{
 
+    static ListView<String> listView;
+    static ObservableList<String> names;
+    
     @Override
     public void start(Stage stage) {
                
         stage.setTitle("JMAC Music Player");
 
-        ObservableList<String> names = FXCollections.observableArrayList(
+        names = FXCollections.observableArrayList(
           "Song1.mp3", "Song2.mp3", "Song3.mp3");
-        ListView<String> listView = new ListView<String>(names);
+        listView = new ListView<>(names);
         Button playButton = new Button("Play");
+        playButton.setOnAction(this::play); //method reference
         Button stopButton = new Button("Stop");
         Button addButton  = new Button("Add Song");
         Button exportButton = new Button("Export");
@@ -70,4 +75,10 @@ public class AdvancedMusicPlayer extends Application{
         Application.launch(args);
     }
     
+    
+    //button functions
+    
+    private void play(ActionEvent event){
+        names.add("played a song");
+    }
 }
