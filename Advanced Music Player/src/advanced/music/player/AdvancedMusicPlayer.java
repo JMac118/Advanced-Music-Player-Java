@@ -182,7 +182,19 @@ public class AdvancedMusicPlayer extends Application {
     }
 
     private void sort(ActionEvent event) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SongSort sorter = new SongSort();
+        
+        
+        Song[] arr = songList.toArray(new Song[songList.size()]);
+        arr = sorter.MergeSortSong(arr);
+        
+        songList.clear();
+        
+        for(int i = 0; i < arr.length; i++){
+            songList.add(arr[i]);
+        }
+        
+        refreshList();
     }
 
     private void listImport(ActionEvent event) {
