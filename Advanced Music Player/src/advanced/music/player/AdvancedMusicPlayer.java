@@ -39,6 +39,7 @@ public class AdvancedMusicPlayer extends Application {
     static ObservableList<String> songNames;
     static Stage mainStage;
     static MediaPlayer player;
+    int index;
 
     @Override
     public void start(Stage stage) {
@@ -98,17 +99,36 @@ public class AdvancedMusicPlayer extends Application {
         }
     }
 
+    private void playNext() {
+        if ((index+1) < songList.size()) {
+            index++;
+        } else {
+            index = 0;
+        }
+        
+        //selects the song
+        listView.getSelectionModel().select(index);
+        
+        Song current = songList.get(index);
+        //has to reverse the forward slashes
+        Media currentMedia = new Media("file:///" + current.getUri().replace('\\', '/'));
+
+        player = new MediaPlayer(currentMedia);
+        player.play();
+    }
+
     //button functions
     private void play(ActionEvent event) {
-        int index = listView.getSelectionModel().getSelectedIndex();
-        
+        index = listView.getSelectionModel().getSelectedIndex();
+
+        //will try to stop music playing if its already going
         try {
             player.stop();
-        }
-        catch(Exception f){
+        } catch (Exception f) {
             //stops music playing
         }
-        
+
+        //checks to see if a song is selected to play, else plays first in list
         if (index >= 0) {
 
             Song current = songList.get(index);
@@ -116,6 +136,10 @@ public class AdvancedMusicPlayer extends Application {
             Media currentMedia = new Media("file:///" + current.getUri().replace('\\', '/'));
 
             player = new MediaPlayer(currentMedia);
+            //sets auto play next
+            player.setOnEndOfMedia(() -> {
+                playNext();
+            });
             player.play();
         } else {
             if (!songList.isEmpty()) {
@@ -126,16 +150,19 @@ public class AdvancedMusicPlayer extends Application {
                 Media currentMedia = new Media("file:///" + current.getUri().replace('\\', '/'));
 
                 player = new MediaPlayer(currentMedia);
+                //sets auto play next
+                player.setOnEndOfMedia(() -> {
+                    playNext();
+                });
                 player.play();
             }
         }
     }
 
     private void stop(ActionEvent event) {
-                try {
+        try {
             player.stop();
-        }
-        catch(Exception f){
+        } catch (Exception f) {
             //stops music playing
         }
     }
