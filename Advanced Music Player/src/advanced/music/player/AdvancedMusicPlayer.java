@@ -87,8 +87,12 @@ public class AdvancedMusicPlayer extends Application{
         //TODO play songs
     }
     
+    private void stop(ActionEvent event){
+        //TODO stop songs
+    }
+    
     private void addSong(ActionEvent event){
-        //TODO play songs
+        //TODO addsongs songs
     }
 
     private void sort(ActionEvent event) {
