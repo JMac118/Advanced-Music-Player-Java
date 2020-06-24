@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package advanced.music.player.Security;
+package advanced.music.player;
 
 
 import java.security.MessageDigest;
