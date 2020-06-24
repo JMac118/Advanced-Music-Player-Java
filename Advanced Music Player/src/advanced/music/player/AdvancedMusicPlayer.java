@@ -219,8 +219,9 @@ public class AdvancedMusicPlayer extends Application {
             @Override
             public void handle(ActionEvent e) {
                 String searchTerm = input.getText();
-                
+
                 searchList(searchTerm);
+                searchWindow.close();
             }
         });
 
@@ -237,11 +238,32 @@ public class AdvancedMusicPlayer extends Application {
 
         searchWindow.setScene(scene);
         searchWindow.show();
-        
-        
+
     }
-    
-    private void searchList(String searchTerm){
-        //TODO implement binary search
+
+    private void searchList(String searchTerm) {
+        Search search = new Search();
+        Song[] arr = songList.toArray(new Song[songList.size()]);
+        Song searchedSong = search.binarySearch(searchTerm, arr);
+
+        if (searchedSong != null) {
+            //will try to stop music playing if its already going
+            try {
+                player.stop();
+            } catch (Exception f) {
+                //stops music playing
+            }
+            System.out.println("SearchedSong= " + searchedSong.getSongName());
+            Media currentMedia = new Media("file:///" + searchedSong.getUri().replace('\\', '/'));
+
+            player = new MediaPlayer(currentMedia);
+            //sets auto play next
+            player.setOnEndOfMedia(() -> {
+                playNext();
+            });
+            player.play();
+        } else {
+            System.out.println("Not found");
+        }
     }
 }
