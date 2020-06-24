@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
@@ -49,7 +50,64 @@ public class AdvancedMusicPlayer extends Application {
 
     @Override
     public void start(Stage stage) {
+        Stage loginPage = new Stage();
+        
+        
+        loginPage.setTitle("Login");
+        GridPane grid = new GridPane();
 
+        Label userLabel = new Label("Username: ");
+        Label passLabel = new Label("Password: ");
+        TextField username = new TextField();
+        TextField password = new TextField();
+        Label info = new Label("Please enter credentials.");
+
+        Button loginButton = new Button("Login");
+        loginButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                String user = username.getText();
+                String pass = password.getText();
+
+                boolean accepted = checkCredentials(user, pass);
+                if(accepted){
+                        loginPage.close();
+                        runMainPage(stage);
+                }
+                else{
+                    info.setText("Incorrect Credentials");
+                }
+            }
+        });
+
+        grid.add(userLabel, 0, 0);
+        grid.add(passLabel, 0, 1);
+        grid.add(username, 1, 0);
+        grid.add(password, 1, 1);
+        grid.add(loginButton, 1, 2);
+        grid.add(info, 1, 3);
+
+        System.out.println("HERE");
+        //searchGrid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(10, 25, 10, 40));
+
+        Scene scene = new Scene(grid, 300, 140);
+        scene.setFill(Color.LIGHTBLUE);
+
+        loginPage.setScene(scene);
+        loginPage.show();
+        
+        
+    }
+
+    private boolean checkCredentials(String username, String password){
+        boolean result = false;
+        
+        return result;
+    }
+    
+    private void runMainPage(Stage stage){
         mainStage = stage;
         stage.setTitle("JMAC Music Player");
 
@@ -92,7 +150,7 @@ public class AdvancedMusicPlayer extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
+    
     /**
      * @param args the command line arguments
      */
