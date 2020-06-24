@@ -45,8 +45,7 @@ public class AdvancedMusicPlayer extends Application {
     @Override
     public void start(Stage stage) {
         Stage loginPage = new Stage();
-        
-        
+
         loginPage.setTitle("Login");
         GridPane grid = new GridPane();
 
@@ -64,11 +63,10 @@ public class AdvancedMusicPlayer extends Application {
                 String pass = password.getText();
 
                 boolean accepted = checkCredentials(user, pass);
-                if(accepted){
-                        loginPage.close();
-                        runMainPage(stage);
-                }
-                else{
+                if (accepted) {
+                    loginPage.close();
+                    runMainPage(stage);
+                } else {
                     info.setText("Incorrect Credentials");
                 }
             }
@@ -90,23 +88,22 @@ public class AdvancedMusicPlayer extends Application {
 
         loginPage.setScene(scene);
         loginPage.show();
-        
-        
+
     }
 
-    private boolean checkCredentials(String username, String password){
+    private boolean checkCredentials(String username, String password) {
         boolean result = false;
-        
+
         AuthenticationImpl authImpl = new AuthenticationImpl();
         authImpl.setAdmin();
         Authentication auth = authImpl;
-        
+
         result = auth.authenticate(username, password);
-        
+
         return result;
     }
-    
-    private void runMainPage(Stage stage){
+
+    private void runMainPage(Stage stage) {
         mainStage = stage;
         stage.setTitle("JMAC Music Player");
 
@@ -149,7 +146,7 @@ public class AdvancedMusicPlayer extends Application {
         stage.setScene(scene);
         stage.show();
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -262,24 +259,23 @@ public class AdvancedMusicPlayer extends Application {
     }
 
     private void listImport(ActionEvent event) {
-        try{
-        CsvReader reader = new CsvReader("playlist.csv");
-        
-        songList.clear();
-        
-        reader.readHeaders();
-        while(reader.readRecord()){
-            String songName = reader.get("song name");
-            String uri = reader.get("uri");
-            
-            Song newSong = new Song(songName, uri);
-            songList.add(newSong);
-        }
-        
-        refreshList();
-        }
-        catch(Exception f){
-            
+        try {
+            CsvReader reader = new CsvReader("playlist.csv");
+
+            songList.clear();
+
+            reader.readHeaders();
+            while (reader.readRecord()) {
+                String songName = reader.get("song name");
+                String uri = reader.get("uri");
+
+                Song newSong = new Song(songName, uri);
+                songList.add(newSong);
+            }
+
+            refreshList();
+        } catch (Exception f) {
+
         }
     }
 
