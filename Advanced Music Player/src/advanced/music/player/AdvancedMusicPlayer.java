@@ -5,7 +5,12 @@
  */
 package advanced.music.player;
 
+import csvreader.CsvReader;
+import csvreader.CsvWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileWriter;
+import java.nio.charset.Charset;
 import java.util.LinkedList;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -200,11 +205,46 @@ public class AdvancedMusicPlayer extends Application {
     }
 
     private void listImport(ActionEvent event) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+        CsvReader reader = new CsvReader("playlist.csv");
+        
+        songList.clear();
+        
+        reader.readHeaders();
+        while(reader.readRecord()){
+            String songName = reader.get("song name");
+            String uri = reader.get("uri");
+            
+            Song newSong = new Song(songName, uri);
+            songList.add(newSong);
+        }
+        
+        refreshList();
+        }
+        catch(Exception f){
+            
+        }
     }
 
     private void listExport(ActionEvent event) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        try {
+            CsvWriter writer = new CsvWriter(new FileWriter("playlist.csv", true), ',');
+
+            writer.write("song name");
+            writer.write("uri");
+            writer.endRecord();
+
+            Song[] arr = songList.toArray(new Song[songList.size()]);
+            for (int i = 0; i < arr.length; i++) {
+                writer.write(arr[i].getSongName());
+                writer.write(arr[i].getUri());
+                writer.endRecord();
+            }
+            writer.close();
+        } catch (Exception f) {
+            System.out.println("Error in exporting: " + f.getMessage());
+        }
     }
 
     private void search(ActionEvent event) {
