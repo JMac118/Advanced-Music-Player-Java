@@ -1,16 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Programmed by Joshua Macaulay 30008704
  */
 package advanced.music.player;
 
+import advanced.music.player.Security.Authentication;
+import advanced.music.player.Security.AuthenticationImpl;
 import csvreader.CsvReader;
 import csvreader.CsvWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
-import java.nio.charset.Charset;
 import java.util.LinkedList;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -18,19 +16,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
@@ -87,7 +81,6 @@ public class AdvancedMusicPlayer extends Application {
         grid.add(loginButton, 1, 2);
         grid.add(info, 1, 3);
 
-        System.out.println("HERE");
         //searchGrid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(10, 25, 10, 40));
@@ -103,6 +96,12 @@ public class AdvancedMusicPlayer extends Application {
 
     private boolean checkCredentials(String username, String password){
         boolean result = false;
+        
+        AuthenticationImpl authImpl = new AuthenticationImpl();
+        authImpl.setAdmin();
+        Authentication auth = authImpl;
+        
+        result = auth.authenticate(username, password);
         
         return result;
     }
